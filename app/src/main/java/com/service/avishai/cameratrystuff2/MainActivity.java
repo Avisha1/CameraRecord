@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         initialize();
     }
+    
 
     public void initialize() {
         mPreview = (CameraSurfaceView) findViewById(R.id.camera_preview);
