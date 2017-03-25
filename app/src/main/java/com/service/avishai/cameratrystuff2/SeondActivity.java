@@ -38,7 +38,7 @@ public class SeondActivity extends AppCompatActivity {
     private Context myContext;
     private CountDownTimer waitTimer;
 
-    private String [] VideoPathArr;
+    private String[] VideoPathArr;
     boolean recording = false;
 
     @Override
@@ -94,23 +94,24 @@ public class SeondActivity extends AppCompatActivity {
     private CountDownTimer timer = new CountDownTimer(6000, 1000) {
 
         boolean recordState = false;
+        boolean isFirstVideo = true;
 
         public void onTick(long millisUntilFinished) {
 
             Long delta = millisUntilFinished / 1000;
             txtTimer.setText(delta.toString());
 
-            if(!recordState) {
+            if (!recordState) {
                 try {
-                    String VideoPath = String.format("/sdcard/slangify%s.mp4", String.valueOf(System.currentTimeMillis()));
-                    String fixedFilePath = FilesManager.getFilePath(VideoPath);
 
-                    if(VideoPathArr[0] == null)
-                        VideoPathArr[0] = fixedFilePath;
+
+                    String FilePath;
+                    if(isFirstVideo)
+                        FilePath = VideoPathArr[0];
                     else
-                        VideoPathArr[1] = fixedFilePath;
+                        FilePath = VideoPathArr[1];
 
-                    mCamControl.startRecording(fixedFilePath);
+                    mCamControl.startRecording(FilePath);
                     start.setBackgroundColor(Color.RED);
                     recordState = true;
                 } catch (final Exception ex) {
@@ -130,6 +131,8 @@ public class SeondActivity extends AppCompatActivity {
                 // Log.i("---","Exception in thread");
             }
 
+            isFirstVideo = false;
+
         }
 
     };
@@ -138,17 +141,26 @@ public class SeondActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
+            String VideoPath = String.format("/sdcard/slangify%s.mp4", String.valueOf(System.currentTimeMillis()));
+            VideoPathArr[0] = FilesManager.getFilePath(VideoPath);
+
+            VideoPath = String.format("/sdcard/slangify%s.mp4", String.valueOf(System.currentTimeMillis()));
+            VideoPathArr[1] = FilesManager.getFilePath(VideoPath);
+
+            Log.i("File1 Path" , VideoPathArr[0]);
+            Log.i("File2 Path" , VideoPathArr[1]);
+
             if (waitTimer != null) {
                 waitTimer.cancel();
                 waitTimer = null;
             }
 
-            if(mCamControl.isFrontCamera())
+            if (mCamControl.isFrontCamera())
                 mCamControl.swapCamera();
 
             timer.start();
 
-             new Handler().postDelayed(new Runnable() {
+            new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
 
@@ -157,15 +169,17 @@ public class SeondActivity extends AppCompatActivity {
                 }
             }, 8000);
 
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
-                    //VideoPathArr
-
+                    String VideoMerged = FilesManager.merge2Videos(VideoPathArr[0], VideoPathArr[1]);
+                    Log.i("Full video path" , VideoMerged);
 
                 }
-            }, 14);
+            }, 15000);
+
+
         }
     };
 

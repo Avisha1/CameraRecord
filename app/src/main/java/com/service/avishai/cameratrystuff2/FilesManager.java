@@ -32,12 +32,13 @@ public class FilesManager {
         return f.getPath();
     }
 
-    public String merge2Videos(String video1, String video2){
+    public static String merge2Videos(String video1, String video2){
 
+        String VideoPath = String.format("/sdcard/slangifyMerged%s.mp4", String.valueOf(System.currentTimeMillis()));
 
+        boolean answer = MediaEditUtil.mergeVideos(video1, video2, VideoPath);
 
-        //Videokit vk = Videokit.getInstance();
-        return "";
+        return !answer ? "" : VideoPath;
     }
 
 
