@@ -126,14 +126,13 @@ public class CameraControl implements CameraControlInterface {
         mediaRecorder.setVideoEncoder(profile.videoCodec);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);*/
 
-        String fixedFilePath;
+        String fixedFilePath = "";
         if(VideoPath == null ){
             VideoPath = String.format("/sdcard/slangify%s.mp4", String.valueOf(timestamp));
             fixedFilePath = FilesManager.getFilePath(VideoPath);
         }
         else
             fixedFilePath = VideoPath;
-
 
         mediaRecorder.setOutputFile(fixedFilePath);
         mediaRecorder.setMaxDuration(600000); //set maximum duration 60 sec.
