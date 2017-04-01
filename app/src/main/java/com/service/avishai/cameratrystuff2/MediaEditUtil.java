@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.URI;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,6 +40,33 @@ public class MediaEditUtil {
 
         boolean result = true;
         try {
+
+
+            /*ArrayList<String> SegmentNumber = new ArrayList<>();
+            SegmentNumber.add(firstVideo);
+            SegmentNumber.add(secondVideo);
+
+            for (int i = 1; i <= SegmentNumber.size(); i++) {
+
+                IsoFile isoFile = new IsoFile(SegmentNumber.get(i));
+                Movie m = new Movie();
+
+                List<TrackBox> trackBoxes = isoFile.getMovieBox().getBoxes(
+                        TrackBox.class);
+
+                for (TrackBox trackBox : trackBoxes) {
+
+                    trackBox.getTrackHeaderBox().setMatrix(Matrix.ROTATE_90);
+                    m.addTrack(new Mp4TrackImpl("", trackBox));
+
+                }
+                //inMovies[i - 1] = m;
+            }*/
+
+
+
+
+
             Movie[] inMovies = new Movie[2];
 
             /*File file1 = new File(firstVideo);
@@ -55,7 +83,16 @@ public class MediaEditUtil {
                 inMovies[0] = MovieCreator.build(channel1);
             }*/
 
+
             inMovies[0] = MovieCreator.build(firstVideo);
+            inMovies[1] = MovieCreator.build(secondVideo);
+
+
+            Matrix firstMatrix = inMovies[0].getMatrix();
+            Matrix secondMatrix = inMovies[1].getMatrix();
+            //inMovies[1].setMatrix(Matrix.ROTATE_270);
+            //secondMatrix = inMovies[1].getMatrix();
+
 
             //change the wrong orientation for the second video
             /*IsoFile isoFile1 = new IsoFile(firstVideo);
@@ -86,9 +123,10 @@ public class MediaEditUtil {
             mvhb.setMatrix(Matrix.ROTATE_180);
             isoFile.writeContainer(new FileOutputStream("resultOrFix.mp4").getChannel());*/
 
-            inMovies[1] = MovieCreator.build(secondVideo);
 
-            // Track
+
+
+            //Append the two videos into one video
             List<Track> videoTracks = new LinkedList<>();
             List<Track> audioTracks = new LinkedList<>();
             for (Movie m : inMovies) {
@@ -115,6 +153,7 @@ public class MediaEditUtil {
                         .toArray(new Track[videoTracks.size()])));
             }
 
+            //
             Container out = new DefaultMp4Builder().build(resultMov);
             FileOutputStream fos = new FileOutputStream(new File(output));
             FileChannel channel = fos.getChannel();
