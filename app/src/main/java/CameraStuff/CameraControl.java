@@ -117,16 +117,17 @@ public class CameraControl implements CameraControlInterface {
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
-        CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_480P);
+        CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH);
+        //mediaRecorder.setVideoSize(profile.videoFrameWidth, profile.videoFrameWidth);
         mediaRecorder.setProfile(profile);
 
 /*        mediaRecorder.setVideoFrameRate(60);
         mediaRecorder.setVideoSize(profile.videoFrameWidth, profile.videoFrameHeight);
-        mediaRecorder.setVideoEncodingBitRate(profile.videoBitRate);
+        mediaRecorder.setVideoEncodingBitRate(profile.audioBitRate);
         mediaRecorder.setVideoEncoder(profile.videoCodec);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);*/
 
-        String fixedFilePath = "";
+        String fixedFilePath;
         if(VideoPath == null ){
             VideoPath = String.format("/sdcard/slangify%s.mp4", String.valueOf(timestamp));
             fixedFilePath = FilesManager.getFilePath(VideoPath);
@@ -194,12 +195,12 @@ public class CameraControl implements CameraControlInterface {
         if (display.getRotation() == Surface.ROTATION_0) {
             //parameters.setPreviewSize(height, width);
             mCamera.setDisplayOrientation(90);
-        }
 
-        if (display.getRotation() == Surface.ROTATION_270) {
+        }
+/*        if (display.getRotation() == Surface.ROTATION_270) {
             //parameters.setPreviewSize(width, height);
             mCamera.setDisplayOrientation(180);
-        }
+        }*/
 
 
 

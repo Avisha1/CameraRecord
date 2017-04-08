@@ -1,6 +1,9 @@
 package com.service.avishai.cameratrystuff2;
 
+import android.content.Context;
+
 import java.io.File;
+
 
 /**
  * Created by avishai on 3/10/2017.
@@ -33,13 +36,29 @@ public class FilesManager {
     }
 
     public static String merge2Videos(String video1, String video2){
+        return merge2Videos(video1, video2, false, null);
+    }
+
+    public static String merge2Videos(String video1, String video2, Boolean useFFmpeg, Context context){
 
         String VideoPath = String.format("/sdcard/slangifyMerged%s.mp4", String.valueOf(System.currentTimeMillis()));
 
-        boolean answer = MediaEditUtil.mergeVideos(video1, video2, VideoPath);
+
+
+        boolean answer = false;
+        if(useFFmpeg){
+
+            answer = MediaEditUtil.merge2VideosFFMPEG(video1, video2, VideoPath, context);
+        }
+        else{
+            //use MP4Parser
+            answer = MediaEditUtil.mergeVideos(video1, video2, VideoPath);
+        }
 
         return !answer ? "" : VideoPath;
     }
+
+
 
 
 

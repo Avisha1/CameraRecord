@@ -111,7 +111,10 @@ public class SeondActivity extends AppCompatActivity {
                     else
                         FilePath = VideoPathArr[1];
 
+                    Log.i("NOW RECORDING: ", "Recording to this path: " + FilePath);
+                    Log.i("RECORDING", "Calling Start recording");
                     mCamControl.startRecording(FilePath);
+                    Log.i("RECORDING", "After start recording");
                     start.setBackgroundColor(Color.RED);
                     recordState = true;
                 } catch (final Exception ex) {
@@ -163,7 +166,6 @@ public class SeondActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
                     mCamControl.swapCamera();
                     timer.start();
                 }
@@ -173,7 +175,14 @@ public class SeondActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    String VideoMerged = FilesManager.merge2Videos(VideoPathArr[0], VideoPathArr[1]);
+
+                    //String VideoMerged = FilesManager.merge2Videos(VideoPathArr[0], VideoPathArr[1]);
+                    String VideoMerged = FilesManager.merge2Videos(
+                            VideoPathArr[0],
+                            VideoPathArr[1],
+                            true,
+                            getApplicationContext());
+
                     Log.i("Full video path" , VideoMerged);
 
                 }
