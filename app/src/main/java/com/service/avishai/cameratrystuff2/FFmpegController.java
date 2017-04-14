@@ -79,6 +79,9 @@ public class FFmpegController {
             try{
 
                 FfmpegExecuteResponseHandler handler = new FfmpegExecuteResponseHandler();
+
+                String ffmpegVersion = ffmpeg.getDeviceFFmpegVersion();
+                String ffmpegLibraryVersion =ffmpeg.getLibraryFFmpegVersion();
                 ffmpeg.execute(commands, handler);
                 isExecuted = true;
             }

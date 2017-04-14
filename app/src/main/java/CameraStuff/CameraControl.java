@@ -118,8 +118,17 @@ public class CameraControl implements CameraControlInterface {
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
         CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH);
+
+
+        mediaRecorder.setOutputFormat(2); //mpeg_4//profile.fileFormat);
+        mediaRecorder.setVideoFrameRate(60);
+        mediaRecorder.setVideoSize(profile.videoFrameWidth, profile.videoFrameHeight);
+        mediaRecorder.setVideoEncodingBitRate(profile.videoBitRate);
+        mediaRecorder.setVideoEncoder(profile.videoCodec);
+        mediaRecorder.setAudioEncoder(profile.audioCodec);
+
         //mediaRecorder.setVideoSize(profile.videoFrameWidth, profile.videoFrameWidth);
-        mediaRecorder.setProfile(profile);
+        //mediaRecorder.setProfile(profile);
 
 /*        mediaRecorder.setVideoFrameRate(60);
         mediaRecorder.setVideoSize(profile.videoFrameWidth, profile.videoFrameHeight);
@@ -136,8 +145,8 @@ public class CameraControl implements CameraControlInterface {
             fixedFilePath = VideoPath;
 
         mediaRecorder.setOutputFile(fixedFilePath);
-        mediaRecorder.setMaxDuration(600000); //set maximum duration 60 sec.
-        mediaRecorder.setMaxFileSize(50000000); //set maximum file size 50M
+       // mediaRecorder.setMaxDuration(600000); //set maximum duration 60 sec.
+        //mediaRecorder.setMaxFileSize(50000000); //set maximum file size 50M
 
         if(cameraCurrentState == CameraType.BACK)
             mediaRecorder.setOrientationHint(90);

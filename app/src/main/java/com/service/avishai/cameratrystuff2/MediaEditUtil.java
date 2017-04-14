@@ -130,9 +130,21 @@ public class MediaEditUtil {
         Log.d("MediaEditUtils", "Third command: " + thirdLine);*/
 
 
+        //this is the command that worked on ffmpeg windows version
+        String command = "-i " +
+                "\"" + firstVideo + "\"" +" -i " +
+                "\"" + secondVideo + "\"" +  " -filter_complex “[0:v:0] [0:a:0] [1:v:0] [1:a:0] concat=n=2:v=1:a=1 [v] [a]” -map “[v]” -map “[a]” " + output;
 
 
-        String [] commands = {firstLine, secondLine, thirdLine};
+
+
+        String [] commands = {"-i",firstVideo,
+                "-i",secondVideo,
+                "-filter_complex","[0:v:0] [0:a:0] [1:v:0] [1:a:0] concat=n=2:v=1:a=1 [v] [a]",
+                "-map","[v]",
+                "-map","[a]",
+                "-preset","ultrafast",
+                output};
 
 
         return commands;

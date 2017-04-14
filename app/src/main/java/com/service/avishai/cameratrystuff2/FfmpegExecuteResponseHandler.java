@@ -13,6 +13,11 @@ import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedExceptio
 import com.service.avishai.cameratrystuff2.Consts_Enums.Constants;
 
 public class FfmpegExecuteResponseHandler implements FFmpegExecuteResponseHandler{
+
+    long tStart;
+    long tEnd;
+
+
     @Override
     public void onSuccess(String message) {
         Log.d(Constants.Media.Ffmpeg, "Entered onFinish Handler" + message);
@@ -31,11 +36,16 @@ public class FfmpegExecuteResponseHandler implements FFmpegExecuteResponseHandle
 
     @Override
     public void onStart() {
+        tStart = System.currentTimeMillis();
         Log.d(Constants.Media.Ffmpeg, "Entered onStart Handler");
     }
 
     @Override
     public void onFinish() {
         Log.d(Constants.Media.Ffmpeg, "Entered onFinish Handler");
+        tEnd = System.currentTimeMillis();
+        long tDelta = tEnd - tStart;
+        double elapsedSeconds = tDelta / 1000.0;
+        Log.d(Constants.Media.Ffmpeg, "Time in seconds to process: " + elapsedSeconds);
     }
 }
