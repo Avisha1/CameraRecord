@@ -122,7 +122,20 @@ public class CameraControl implements CameraControlInterface {
 
         mediaRecorder.setOutputFormat(2); //mpeg_4//profile.fileFormat);
         mediaRecorder.setVideoFrameRate(60);
-        mediaRecorder.setVideoSize(profile.videoFrameWidth, profile.videoFrameHeight);
+
+
+        //addded
+/*        List<Camera.Size> sizes = mCamera.getParameters().getSupportedVideoSizes();
+
+        Camera.Size SquareSize = chooseVideoAndPictureSize(sizes);
+
+        mediaRecorder.setVideoSize(SquareSize.width, SquareSize.height);*/
+
+        //finish added
+
+
+        mediaRecorder.setVideoSize(videoSize.width, videoSize.height);
+        //mediaRecorder.setVideoSize(profile.videoFrameWidth, profile.videoFrameHeight);
         mediaRecorder.setVideoEncodingBitRate(profile.videoBitRate);
         mediaRecorder.setVideoEncoder(profile.videoCodec);
         mediaRecorder.setAudioEncoder(profile.audioCodec);
@@ -175,6 +188,7 @@ public class CameraControl implements CameraControlInterface {
         }
     }
 
+    private Camera.Size videoSize;
     private void refreshCamera() {
 
         //check if there is valid surface to put the camera on
@@ -193,10 +207,12 @@ public class CameraControl implements CameraControlInterface {
         Display display = ((WindowManager) activityContext.getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
 
         List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();
-
-        Camera.Size previewSize = chooseVideoAndPictureSize(previewSizes);//= previewSizes.get(6);
-
+        Camera.Size previewSize = CameraCalculations.CalculateSquarePreview(previewSizes);//= previewSizes.get(6);
         parameters.setPreviewSize(previewSize.width, previewSize.height);
+
+        //get parameters for video
+        List<Camera.Size> videosSizes = parameters.getSupportedVideoSizes();
+        videoSize = CameraCalculations.CalculateSquareVideo(videosSizes);
 
         //apply parameters on camera
         mCamera.setParameters(parameters);

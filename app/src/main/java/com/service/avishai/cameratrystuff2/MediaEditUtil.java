@@ -4,21 +4,16 @@ package com.service.avishai.cameratrystuff2;
  * Created by avishai on 3/25/2017.
  */
 
-//import android.graphics.Movie;
-
 import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 
 import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.net.URI;
+
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,11 +23,6 @@ import com.googlecode.mp4parser.authoring.Track;
 import com.googlecode.mp4parser.authoring.builder.DefaultMp4Builder;
 import com.googlecode.mp4parser.authoring.container.mp4.MovieCreator;
 import com.googlecode.mp4parser.authoring.tracks.AppendTrack;
-
-import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
-import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
-import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
-import com.service.avishai.cameratrystuff2.Consts_Enums.Constants;
 
 public class MediaEditUtil {
 
